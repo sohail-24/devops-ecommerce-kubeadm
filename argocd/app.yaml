@@ -10,10 +10,14 @@ spec:
     repoURL: https://github.com/sohail-24/devops-ecommerce-kubeadm
     targetRevision: main
     path: helm-charts/django-ecommerce
+    helm:
+    valueFiles:
+      - values.yaml
 
   destination:
     server: https://kubernetes.default.svc
     namespace: ecommerce
+    
 
   syncPolicy:
     automated:
