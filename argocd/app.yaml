@@ -8,12 +8,12 @@ spec:
 
   source:
     repoURL: https://github.com/sohail-24/devops-ecommerce-kubeadm
-    targetRevision: HEAD
+    targetRevision: main
     path: helm-charts/django-ecommerce
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: ecommerce
 
   syncPolicy:
     automated:
