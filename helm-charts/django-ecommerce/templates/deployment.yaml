@@ -87,6 +87,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: django
+  namespace: ecommerce
 spec:
   selector:
     app: django
