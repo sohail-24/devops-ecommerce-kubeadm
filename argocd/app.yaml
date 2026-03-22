@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/YOUR_USERNAME/devops-ecommerce-kubeadm
+    repoURL: https://github.com/sohail-24/devops-ecommerce-kubeadm
     targetRevision: HEAD
     path: helm-charts/django-ecommerce
 
