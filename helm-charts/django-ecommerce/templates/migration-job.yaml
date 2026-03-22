@@ -3,7 +3,6 @@ kind: Job
 metadata:
   name: django-migrate
   namespace: ecommerce
-
   annotations:
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
@@ -16,6 +15,19 @@ spec:
     spec:
       restartPolicy: OnFailure
 
+      # ✅ WAIT FOR POSTGRES (THIS IS THE FIX)
+      initContainers:
+        - name: wait-for-db
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z postgres 5432; do
+                echo "⏳ Waiting for postgres..."
+                sleep 5
+              done
+
       containers:
         - name: migrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -25,6 +37,7 @@ spec:
             - sh
             - -c
             - |
+              echo "🚀 Running migrations..."
               python manage.py migrate
 
           envFrom:
