@@ -4,12 +4,12 @@ metadata:
   name: django-ingress
   namespace: ecommerce
   annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host: ""   # keep empty for now OR add domain later
+      http:
         paths:
           - path: /
             pathType: Prefix
