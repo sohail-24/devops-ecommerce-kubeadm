@@ -11,8 +11,8 @@ spec:
     targetRevision: main
     path: helm-charts/django-ecommerce
     helm:
-    valueFiles:
-      - values.yaml
+      valueFiles:
+        - values.yaml
 
   destination:
     server: https://kubernetes.default.svc
