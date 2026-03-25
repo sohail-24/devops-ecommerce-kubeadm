@@ -15,16 +15,30 @@ spec:
         app: django
     spec:
       serviceAccountName: django-sa
+
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z postgres 5432; do
+                echo "⏳ Waiting for postgres before starting Django..."
+                sleep 5
+              done
+
       containers:
         - name: django
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
           command:
-            - gunicorn
-            - config.wsgi:application
-            - --bind
-            - 0.0.0.0:8000
+            - sh
+            - -c
+            - |
+              echo "🚀 Starting Django..."
+              gunicorn config.wsgi:application --bind 0.0.0.0:8000
 
           ports:
             - containerPort: 8000
@@ -71,16 +85,15 @@ spec:
           env:
             - name: DJANGO_SETTINGS_MODULE
               value: "{{ .Values.env.DJANGO_SETTINGS_MODULE }}"
-             
+
             - name: ALLOWED_HOSTS
               value: "{{ .Values.env.ALLOWED_HOSTS }}"
-              
-            - name: AWS_STORAGE_BUCKET_NAME
-              value: sohail-django-media-bucket
-             
-            - name: AWS_S3_REGION_NAME
-              value: ap-south-1
 
+            - name: AWS_STORAGE_BUCKET_NAME
+              value: "sohail-django-media-bucket"
+
+            - name: AWS_S3_REGION_NAME
+              value: "ap-south-1"
 
 ---
 apiVersion: v1
@@ -91,7 +104,8 @@ metadata:
 spec:
   selector:
     app: django
+  type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 8000
-  type: {{ .Values.service.type }}
+      nodePort: {{ .Values.service.nodePort }}
