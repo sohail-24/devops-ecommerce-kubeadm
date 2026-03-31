@@ -1,0 +1,10 @@
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30080
+
+ingress:
+  enabled: false
+
+env:
+  ALLOWED_HOSTS: "localhost,127.0.0.1,65.0.4.228,sohaildevops.site"

@@ -152,3 +152,4 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 8000
+      nodePort: {{ .Values.service.nodePort | default nil }}
