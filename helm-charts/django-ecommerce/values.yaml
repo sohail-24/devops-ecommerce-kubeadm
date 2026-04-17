@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: sohail28/django-ecommerce
   pullPolicy: IfNotPresent
-  tag: "8d1be29"
+  tag: "f28c9dc"
 
 imagePullSecrets: []
 nameOverride: ""
