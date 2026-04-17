@@ -7,4 +7,4 @@ ingress:
   enabled: false
 
 env:
-  ALLOWED_HOSTS: "localhost,127.0.0.1,65.0.4.228,sohaildevops.site"
+  ALLOWED_HOSTS: "localhost,127.0.0.1,65.0.4.228,sohaildevops.site,10.98.140.139"
